@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="h4_hzNXD_hBDNIElbMxy7M5RKYJwnu6IRcrsG7h37yM" />
     <title>Govt Form Photo & Signature KB Resizer - SSC, UPSC, Banking, Railway</title>
-    <meta name="description" content="Free online tool to compress and resize photo, signature, and documents down to exact KB limits with high clarity.">
+    <meta name="description" content="Free online tool to compress and resize photo, signature, and documents down to exact KB limits including ultra-low 5KB targets.">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
         body { background-color: #f4f6f9; color: #333; line-height: 1.6; padding: 20px; }
@@ -35,7 +35,7 @@
 
 <div class="container">
     <h1>Govt Form Photo & Signature KB Resizer</h1>
-    <p class="subtitle">High Quality Compression for Photos, Signatures & Written Documents</p>
+    <p class="subtitle">Ultra Compression Tool for Strict Exam Limits (5KB, 10KB, 20KB)</p>
 
     <div class="form-group">
         <label for="imageInput">1. Select your Image or Document:</label>
@@ -47,33 +47,33 @@
             <label for="presetSelect">2. Standard Requirements:</label>
             <select id="presetSelect" onchange="applyPreset()">
                 <option value="custom">Custom Size</option>
+                <option value="ultra_low">Ultra Low Limit (Max 5 KB)</option>
                 <option value="ssc_sign">Signature (Max 20 KB)</option>
                 <option value="ssc_photo">Photo / ID (Max 50 KB)</option>
-                <option value="doc_page">Handwritten Page / Doc (Max 100 KB)</option>
             </select>
         </div>
         <div class="form-group">
             <label for="maxKb">3. Target Max Size (KB):</label>
-            <input type="number" id="maxKb" value="20">
+            <input type="number" id="maxKb" value="5">
         </div>
     </div>
 
-    <button onclick="startResize()">Compress & Maximize Clarity</button>
+    <button onclick="startResize()">Force Compress to Target KB</button>
 
     <div class="result-box" id="resultBox">
         <h3>Compression Successful!</h3>
         <img id="preview" class="preview-img" alt="Compressed Preview">
         <p id="fileInfo" style="font-size: 13px; margin-bottom: 10px;"></p>
-        <a id="downloadBtn" class="download-btn" download="sharp-compressed-image.jpg">Download Clean Image</a>
+        <a id="downloadBtn" class="download-btn" download="compressed-file.jpg">Download Image</a>
     </div>
 
     <canvas id="canvas"></canvas>
 
     <div class="seo-section">
-        <h2>Important Note on Document Sizes</h2>
+        <h2>Important Note on 5KB - 10KB Limits</h2>
         <div class="faq-item">
-            <strong>Pro Tip for Handwritten Pages:</strong>
-            <p>Agar koi poora likha hua lamba page hai, toh koshish karein ki use 50KB ya 100KB tak rakhein. 20KB sirf chote signatures aur passport photos ke liye sabse best hota hai!</p>
+            <strong>Why do images look pixelated at 5KB?</strong>
+            <p>A 5KB limit is extremely restrictive. To force a 10MB image down to 5KB, the tool automatically shrinks dimensions and reduces pixel depth so that it successfully passes strict government portal size checks.</p>
         </div>
     </div>
 </div>
@@ -82,14 +82,14 @@
     function applyPreset() {
         var val = document.getElementById('presetSelect').value;
         var kbInput = document.getElementById('maxKb');
+        if(val === 'ultra_low') kbInput.value = 5;
         if(val === 'ssc_sign') kbInput.value = 20;
         if(val === 'ssc_photo') kbInput.value = 50;
-        if(val === 'doc_page') kbInput.value = 100;
     }
 
     function startResize() {
         var fileInput = document.getElementById('imageInput');
-        var maxKb = parseInt(document.getElementById('maxKb').value) || 20;
+        var maxKb = parseInt(document.getElementById('maxKb').value) || 5;
 
         if (!fileInput.files || fileInput.files.length === 0) {
             alert('Please select an image first!');
@@ -108,14 +108,14 @@
                 var width = img.width;
                 var height = img.height;
 
-                // Ultra-smart scaling to prevent text breakup at low KB limits
-                var maxDimension = 1000;
-                if (maxKb <= 25) {
-                    maxDimension = 750; // 20KB ke liye optimized dimension taaki text readable rahe
+                // Ultra-aggressive dimension scaling for 5KB - 10KB targets
+                var maxDimension = 1200;
+                if (maxKb <= 10) {
+                    maxDimension = 350; // 5KB-10KB ke liye dimensions chote karne padenge taaki file size target tak gir sake
+                } else if (maxKb <= 25) {
+                    maxDimension = 600;
                 } else if (maxKb <= 50) {
                     maxDimension = 900;
-                } else {
-                    maxDimension = 1200;
                 }
 
                 if (width > maxDimension || height > maxDimension) {
@@ -131,20 +131,18 @@
                 canvas.width = width;
                 canvas.height = height;
 
-                // High quality smoothing
                 ctx.imageSmoothingEnabled = true;
                 ctx.imageSmoothingQuality = 'high';
                 
-                // Solid white background fallback
                 ctx.fillStyle = '#FFFFFF';
                 ctx.fillRect(0, 0, width, height);
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // Gradual quality step-down to hit exact KB target without crashing text
-                var quality = 0.95;
+                // Aggressive quality reduction loop to force hit on ultra-low KB targets
+                var quality = 0.90;
                 var dataUrl = canvas.toDataURL('image/jpeg', quality);
                 
-                while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.15) {
+                while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.05) {
                     quality -= 0.02;
                     dataUrl = canvas.toDataURL('image/jpeg', quality);
                 }
