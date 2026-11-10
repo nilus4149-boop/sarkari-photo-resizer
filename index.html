@@ -128,9 +128,12 @@
                 var width = img.width;
                 var height = img.height;
 
+                // Smart Dimension Scaling for heavy images to prevent blur on small KB targets
                 var maxDimension = 900;
                 if (maxKb <= 25) {
-                    maxDimension = 500;
+                    maxDimension = 400;
+                } else if (maxKb <= 50) {
+                    maxDimension = 650;
                 }
 
                 if (width > maxDimension || height > maxDimension) {
@@ -152,11 +155,11 @@
                 ctx.fillRect(0, 0, width, height);
                 ctx.drawImage(img, 0, 0, width, height);
 
-                var quality = 0.95;
+                var quality = 0.92;
                 var dataUrl = canvas.toDataURL('image/jpeg', quality);
                 
-                while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.3) {
-                    quality -= 0.03;
+                while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.2) {
+                    quality -= 0.02;
                     dataUrl = canvas.toDataURL('image/jpeg', quality);
                 }
 
