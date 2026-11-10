@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,21 +39,21 @@
 
 <div class="container">
     <h1>Govt Form Photo & Signature KB Resizer</h1>
-    <p class="subtitle">High Quality Compression - SSC, Banking, UPSC & State Exams ke liye</p>
+    <p class="subtitle">High Quality Image Compression for SSC, Banking, UPSC & State Exams</p>
 
     <div class="form-group">
-        <label for="imageInput">1. Apni Photo ya Signature Select Karein:</label>
+        <label for="imageInput">1. Select your Photo or Signature:</label>
         <input type="file" id="imageInput" accept="image/*">
     </div>
 
     <div class="row">
         <div class="form-group">
-            <label for="presetSelect">2. Standard Requirement:</label>
+            <label for="presetSelect">2. Standard Requirements:</label>
             <select id="presetSelect" onchange="applyPreset()">
                 <option value="custom">Custom Size</option>
                 <option value="ssc_photo">SSC Photo (Max 50 KB)</option>
                 <option value="ssc_sign">SSC Signature (Max 20 KB)</option>
-                <option value="pan_photo">PAN Card / Aadhaar Photo (Max 50 KB)</option>
+                <option value="pan_photo">PAN / Aadhaar Photo (Max 50 KB)</option>
             </select>
         </div>
         <div class="form-group">
@@ -75,8 +75,8 @@
 
     <!-- SEO & Exam Info Section -->
     <div class="seo-section">
-        <h2>Sarkari Exam Photo & Signature Requirements</h2>
-        <p>Yeh tool sabhi Indian Competitive Exams ke liye specially design kiya gaya hai taaki aapki photo ki clarity kharab hue bina file size 20KB, 50KB tak kam ho sake.</p>
+        <h2>Government Exam Photo & Signature Guidelines</h2>
+        <p>This tool is specially designed for Indian competitive exam aspirants to compress and resize photos and signatures down to exact KB limits (such as 20KB or 50KB) without losing clarity or sharpness.</p>
         
         <h2>Supported Examinations</h2>
         <ul>
@@ -88,12 +88,12 @@
 
         <h2>Frequently Asked Questions (FAQs)</h2>
         <div class="faq-item">
-            <strong>Q1. Photo compress karne ke baad blur toh nahi hogi?</strong>
-            <p>Nahi, yeh tool smart dimension scaling canvas ka use karta hai, jisse image compress hone ke baad bhi clear aur sharp dikhti hai.</p>
+            <strong>Q1. Will my photo blur after compression?</strong>
+            <p>No, this tool uses smart client-side canvas dimension scaling and adaptive compression algorithms to ensure your image remains sharp and clear.</p>
         </div>
         <div class="faq-item">
-            <strong>Q2. Kya mera image data safe hai?</strong>
-            <p>Haan, 100% safe hai. Aapki photo kisi server par upload nahi hoti, sabhi resizing aapke browser (browser-side) mein hi hoti hai.</p>
+            <strong>Q2. Is my uploaded image data safe?</strong>
+            <p>Yes, 100% safe. Your images are never uploaded to any external server; all processing happens securely right inside your web browser.</p>
         </div>
     </div>
 </div>
@@ -112,7 +112,7 @@
         var maxKb = parseInt(document.getElementById('maxKb').value) || 50;
 
         if (!fileInput.files || fileInput.files.length === 0) {
-            alert('Pehle koi image select karein!');
+            alert('Please select an image first!');
             return;
         }
 
