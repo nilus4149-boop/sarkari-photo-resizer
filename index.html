@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <button onclick="resizeImage()">Compress & Maintain Quality</button>
+    <button onclick="safeResizeImage()">Compress & Maintain Quality</button>
 
     <div class="result-box" id="resultBox">
         <h3>Compression Successful!</h3>
@@ -79,11 +79,19 @@
         if(val === 'pan_photo') kbInput.value = 45;
     }
 
+    function safeResizeImage() {
+        try {
+            resizeImage();
+        } catch (err) {
+            alert("Kuch error aa gayi: " + err.message);
+        }
+    }
+
     function resizeImage() {
         let fileInput = document.getElementById('imageInput');
         let maxKb = parseInt(document.getElementById('maxKb').value) || 50;
 
-        if (fileInput.files.length === 0) {
+        if (!fileInput.files || fileInput.files.length === 0) {
             alert('Pehle koi image select karein!');
             return;
         }
@@ -91,17 +99,28 @@
         let file = fileInput.files[0];
         let reader = new FileReader();
 
+        reader.onerror = function() {
+            alert("File read karne me error aayi!");
+        };
+
         reader.onload = function(e) {
             let img = new Image();
-            img.src = e.target.result;
+            
+            img.onerror = function() {
+                alert("Yeh image load nahi ho payi. Koyi doosri image try karein.");
+            };
+
             img.onload = function() {
                 let canvas = document.getElementById('canvas');
+                if (!canvas) {
+                    alert("Canvas element nahi mila!");
+                    return;
+                }
                 let ctx = canvas.getContext('2d');
 
                 let width = img.width;
                 let height = img.height;
 
-                // Agar target size 20KB se kam hai (jaise signature 10-15KB), toh dimensions ko chhota karna zaroori hai
                 let maxDimension = maxKb < 25 ? 600 : 1200;
 
                 if (width > maxDimension || height > maxDimension) {
@@ -127,7 +146,6 @@
                 let dataUrl = canvas.toDataURL('image/jpeg', quality);
                 let attempt = 0;
 
-                // Safe loop jisse code kabhi fass na ho
                 while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.1 && attempt < 15) {
                     quality -= 0.08;
                     dataUrl = canvas.toDataURL('image/jpeg', quality);
@@ -146,11 +164,14 @@
                 downloadBtn.href = dataUrl;
 
                 document.getElementById('resultBox').style.display = 'block';
-            }
-        }
+            };
+
+            img.src = e.target.result;
+        };
+
         reader.readAsDataURL(file);
     }
 </script>
 
 </body>
-</html>
+</html
