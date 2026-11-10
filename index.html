@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="h4_hzNXD_hBDNIElbMxy7M5RKYJwnu6IRcrsG7h37yM" />
     <title>Govt Form Photo & Signature KB Resizer - SSC, UPSC, Banking, Railway</title>
-    <meta name="description" content="Free online tool to compress and resize photo, signature, and documents in KB for SSC, UPSC, Banking, and State Police exams with high clarity.">
+    <meta name="description" content="Free online tool to compress and resize photo, signature, and documents in KB for competitive exams and government forms with high clarity.">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
         body { background-color: #f4f6f9; color: #333; line-height: 1.6; padding: 20px; }
@@ -39,7 +39,7 @@
 
 <div class="container">
     <h1>Govt Form Photo & Signature KB Resizer</h1>
-    <p class="subtitle">High Quality Compression for SSC, Banking, UPSC & State Exams</p>
+    <p class="subtitle">High Quality Compression for Photos, Signatures & Documents</p>
 
     <div class="form-group">
         <label for="imageInput">1. Select your Photo, Signature or Document:</label>
@@ -51,9 +51,9 @@
             <label for="presetSelect">2. Standard Requirements:</label>
             <select id="presetSelect" onchange="applyPreset()">
                 <option value="custom">Custom Size</option>
-                <option value="ssc_photo">SSC Photo (Max 50 KB)</option>
-                <option value="ssc_sign">SSC Signature (Max 20 KB)</option>
-                <option value="pan_photo">PAN / Aadhaar Photo (Max 50 KB)</option>
+                <option value="photo_preset">Photo (Max 50 KB)</option>
+                <option value="signature_preset">Signature (Max 20 KB)</option>
+                <option value="document_preset">Document / Page (Max 150 KB)</option>
             </select>
         </div>
         <div class="form-group">
@@ -68,7 +68,7 @@
         <h3>Compression Successful!</h3>
         <img id="preview" class="preview-img" alt="High Quality Compressed Preview">
         <p id="fileInfo" style="font-size: 13px; margin-bottom: 10px;"></p>
-        <a id="downloadBtn" class="download-btn" download="sarkari-resized-image.jpg">Download Clean Image</a>
+        <a id="downloadBtn" class="download-btn" download="resized-image.jpg">Download Clean Image</a>
     </div>
 
     <canvas id="canvas"></canvas>
@@ -80,100 +80,10 @@
         
         <h2>Supported Examinations</h2>
         <ul>
-            <li><strong>SSC Exams:</strong> CGL, CHSL, GD Constable, MTS, CPO, Steno (Photo: 20KB-50KB, Signature: 10KB-20KB)</li>
-            <li><strong>Banking Exams:</strong> IBPS PO, Clerk, SBI PO, RBI Assistant</li>
-            <li><strong>Railway Exams:</strong> RRB NTPC, Group D, ALP, Technician</li>
-            <li><strong>UPSC & State PSC:</strong> IAS, IPS, State PCS, Police Recruitment</li>
+            <li><strong>Exams Covered:</strong> SSC, Banking, Railway, UPSC, State PSC & Police Exams</li>
+            <li><strong>Standard Limits:</strong> Photos (20KB - 50KB), Signatures (10KB - 20KB), Documents (100KB - 200KB)</li>
         </ul>
 
         <h2>Frequently Asked Questions (FAQs)</h2>
         <div class="faq-item">
             <strong>Q1. Will my photo or document blur after compression?</strong>
-            <p>No, this tool uses smart client-side canvas dimension scaling and adaptive compression algorithms to ensure your image remains as sharp and clear as possible.</p>
-        </div>
-        <div class="faq-item">
-            <strong>Q2. Is my uploaded image data safe?</strong>
-            <p>Yes, 100% safe. Your images are never uploaded to any external server; all processing happens securely right inside your web browser.</p>
-        </div>
-    </div>
-</div>
-
-<script>
-    function applyPreset() {
-        var val = document.getElementById('presetSelect').value;
-        var kbInput = document.getElementById('maxKb');
-        if(val === 'ssc_photo') kbInput.value = 48;
-        if(val === 'ssc_sign') kbInput.value = 18;
-        if(val === 'pan_photo') kbInput.value = 45;
-    }
-
-    function startResize() {
-        var fileInput = document.getElementById('imageInput');
-        var maxKb = parseInt(document.getElementById('maxKb').value) || 50;
-
-        if (!fileInput.files || fileInput.files.length === 0) {
-            alert('Please select an image first!');
-            return;
-        }
-
-        var file = fileInput.files[0];
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-            var img = new Image();
-            img.onload = function() {
-                var canvas = document.getElementById('canvas');
-                var ctx = canvas.getContext('2d');
-
-                var width = img.width;
-                var height = img.height;
-
-                var maxDimension = 1100;
-                if (maxKb <= 25) {
-                    maxDimension = 650;
-                } else if (maxKb <= 50) {
-                    maxDimension = 900;
-                }
-
-                if (width > maxDimension || height > maxDimension) {
-                    if (width > height) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    } else {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-
-                ctx.imageSmoothingEnabled = true;
-                ctx.imageSmoothingQuality = 'high';
-                ctx.fillStyle = '#FFFFFF';
-                ctx.fillRect(0, 0, width, height);
-                ctx.drawImage(img, 0, 0, width, height);
-
-                var quality = 0.95;
-                var dataUrl = canvas.toDataURL('image/jpeg', quality);
-                
-                while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.2) {
-                    quality -= 0.02;
-                    dataUrl = canvas.toDataURL('image/jpeg', quality);
-                }
-
-                var finalSizeKb = Math.round((dataUrl.length * (3/4)) / 1024);
-
-                document.getElementById('preview').src = dataUrl;
-                document.getElementById('fileInfo').innerHTML = 'Final Size: <b>' + finalSizeKb + ' KB</b> (Target: &lt; ' + maxKb + ' KB)';
-                document.getElementById('downloadBtn').href = dataUrl;
-                document.getElementById('resultBox').style.display = 'block';
-            };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-</script>
-
-</body>
-</html>
