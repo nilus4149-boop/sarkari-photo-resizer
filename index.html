@@ -99,7 +99,12 @@
 
                 var width = img.width;
                 var height = img.height;
-                var maxDimension = maxKb < 25 ? 600 : 1200;
+
+                // Smart scaling: taaki quality kharab na ho aur size bhi limit me aaye
+                var maxDimension = 900;
+                if (maxKb <= 25) {
+                    maxDimension = 500; // Signature ke liye chhota size lekin sharp
+                }
 
                 if (width > maxDimension || height > maxDimension) {
                     if (width > height) {
@@ -120,14 +125,13 @@
                 ctx.fillRect(0, 0, width, height);
                 ctx.drawImage(img, 0, 0, width, height);
 
-                var quality = 0.90;
+                // Start with high quality and slowly step down only if needed
+                var quality = 0.95;
                 var dataUrl = canvas.toDataURL('image/jpeg', quality);
-                var attempt = 0;
-
-                while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.1 && attempt < 15) {
-                    quality -= 0.08;
+                
+                while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.3) {
+                    quality -= 0.03; // Smooth step down taaki ekdum se quality na phate
                     dataUrl = canvas.toDataURL('image/jpeg', quality);
-                    attempt++;
                 }
 
                 var finalSizeKb = Math.round((dataUrl.length * (3/4)) / 1024);
