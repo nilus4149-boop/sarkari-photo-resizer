@@ -107,7 +107,8 @@
 
     function startResize() {
         var fileInput = document.getElementById('imageInput');
-        var maxKb = parseInt(document.getElementById('maxKb').value) || 50;
+        var maxKbInput = document.getElementById('maxKb');
+        var maxKb = parseInt(maxKbInput ? maxKbInput.value : 50) || 50;
 
         if (!fileInput.files || fileInput.files.length === 0) {
             alert('Please select an image first!');
@@ -133,34 +134,4 @@
                     maxDimension = 900;
                 }
 
-                if (width > maxDimension || height > maxDimension) {
-                    if (width > height) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    } else {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-
-                ctx.imageSmoothingEnabled = true;
-                ctx.imageSmoothingQuality = 'high';
-                ctx.fillStyle = '#FFFFFF';
-                ctx.fillRect(0, 0, width, height);
-                ctx.drawImage(img, 0, 0, width, height);
-
-                var quality = 0.95;
-                var dataUrl = canvas.toDataURL('image/jpeg', quality);
-                
-                while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.2) {
-                    quality -= 0.02;
-                    dataUrl = canvas.toDataURL('image/jpeg', quality);
-                }
-
-                var finalSizeKb = Math.round((dataUrl.length * (3/4)) / 1024);
-
-                document.getElementById('preview').src = dataUrl;
-                document.getElementById('fileInfo').innerHTML = 'Final Size: <b>' + finalSizeKb + ' KB</b> (Target: &
+                if (width > maxDimension
