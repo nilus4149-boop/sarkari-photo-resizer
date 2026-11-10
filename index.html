@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Govt Form Photo & Signature KB/Dimension Resizer</title>
+    <title>Govt Form Photo & Signature KB Resizer</title>
     <meta name="description" content="Free online tool to compress and resize photo and signature in KB for SSC, UPSC, Banking and all Indian Government competitive exams with high quality.">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <button onclick="safeResizeImage()">Compress & Maintain Quality</button>
+    <button onclick="startResize()">Compress & Maintain Quality</button>
 
     <div class="result-box" id="resultBox">
         <h3>Compression Successful!</h3>
@@ -72,56 +72,34 @@
 
 <script>
     function applyPreset() {
-        let val = document.getElementById('presetSelect').value;
-        let kbInput = document.getElementById('maxKb');
+        var val = document.getElementById('presetSelect').value;
+        var kbInput = document.getElementById('maxKb');
         if(val === 'ssc_photo') kbInput.value = 48;
         if(val === 'ssc_sign') kbInput.value = 18;
         if(val === 'pan_photo') kbInput.value = 45;
     }
 
-    function safeResizeImage() {
-        try {
-            resizeImage();
-        } catch (err) {
-            alert("Kuch error aa gayi: " + err.message);
-        }
-    }
-
-    function resizeImage() {
-        let fileInput = document.getElementById('imageInput');
-        let maxKb = parseInt(document.getElementById('maxKb').value) || 50;
+    function startResize() {
+        var fileInput = document.getElementById('imageInput');
+        var maxKb = parseInt(document.getElementById('maxKb').value) || 50;
 
         if (!fileInput.files || fileInput.files.length === 0) {
             alert('Pehle koi image select karein!');
             return;
         }
 
-        let file = fileInput.files[0];
-        let reader = new FileReader();
-
-        reader.onerror = function() {
-            alert("File read karne me error aayi!");
-        };
+        var file = fileInput.files[0];
+        var reader = new FileReader();
 
         reader.onload = function(e) {
-            let img = new Image();
-            
-            img.onerror = function() {
-                alert("Yeh image load nahi ho payi. Koyi doosri image try karein.");
-            };
-
+            var img = new Image();
             img.onload = function() {
-                let canvas = document.getElementById('canvas');
-                if (!canvas) {
-                    alert("Canvas element nahi mila!");
-                    return;
-                }
-                let ctx = canvas.getContext('2d');
+                var canvas = document.getElementById('canvas');
+                var ctx = canvas.getContext('2d');
 
-                let width = img.width;
-                let height = img.height;
-
-                let maxDimension = maxKb < 25 ? 600 : 1200;
+                var width = img.width;
+                var height = img.height;
+                var maxDimension = maxKb < 25 ? 600 : 1200;
 
                 if (width > maxDimension || height > maxDimension) {
                     if (width > height) {
@@ -142,9 +120,9 @@
                 ctx.fillRect(0, 0, width, height);
                 ctx.drawImage(img, 0, 0, width, height);
 
-                let quality = 0.90;
-                let dataUrl = canvas.toDataURL('image/jpeg', quality);
-                let attempt = 0;
+                var quality = 0.90;
+                var dataUrl = canvas.toDataURL('image/jpeg', quality);
+                var attempt = 0;
 
                 while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.1 && attempt < 15) {
                     quality -= 0.08;
@@ -152,26 +130,18 @@
                     attempt++;
                 }
 
-                let finalSizeKb = Math.round((dataUrl.length * (3/4)) / 1024);
+                var finalSizeKb = Math.round((dataUrl.length * (3/4)) / 1024);
 
-                let preview = document.getElementById('preview');
-                preview.src = dataUrl;
-
-                let fileInfo = document.getElementById('fileInfo');
-                fileInfo.innerHTML = Final Size: <b>${finalSizeKb} KB</b> (Target: &lt;${maxKb}KB);
-
-                let downloadBtn = document.getElementById('downloadBtn');
-                downloadBtn.href = dataUrl;
-
+                document.getElementById('preview').src = dataUrl;
+                document.getElementById('fileInfo').innerHTML = 'Final Size: <b>' + finalSizeKb + ' KB</b> (Target: &lt; ' + maxKb + ' KB)';
+                document.getElementById('downloadBtn').href = dataUrl;
                 document.getElementById('resultBox').style.display = 'block';
             };
-
             img.src = e.target.result;
         };
-
         reader.readAsDataURL(file);
     }
 </script>
 
 </body>
-</html
+</html>
