@@ -17,8 +17,8 @@
         input[type="file"], select, input[type="number"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; background: #fff; }
         .row { display: flex; gap: 15px; }
         .row .form-group { flex: 1; }
-        button { background-color: #1a73e8; color: white; border: none; padding: 12px; width: 100%; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer; transition: background 0.3s; margin-top: 5px; }
-        button:hover { background-color: #1557b0; }
+        .btn-compress { background-color: #1a73e8; color: white; border: none; padding: 12px; width: 100%; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer; transition: background 0.3s; margin-top: 5px; }
+        .btn-compress:hover { background-color: #1557b0; }
         .result-box { margin-top: 25px; padding: 15px; background: #e8f0fe; border-radius: 5px; display: none; text-align: center; }
         .result-box h3 { margin-bottom: 10px; color: #1a73e8; }
         canvas { display: none; }
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <button onclick="startResize()">Compress & Maintain Quality</button>
+    <button type="button" class="btn-compress" id="compressBtn">Compress & Maintain Quality</button>
 
     <div class="result-box" id="resultBox">
         <h3>Compression Successful!</h3>
@@ -105,10 +105,10 @@
         if(val === 'document_preset') kbInput.value = 150;
     }
 
-    function startResize() {
+    document.getElementById('compressBtn').addEventListener('click', function() {
         var fileInput = document.getElementById('imageInput');
         var maxKbInput = document.getElementById('maxKb');
-        var maxKb = parseInt(maxKbInput ? maxKbInput.value : 50) || 50;
+        var maxKb = parseInt(maxKbInput.value) || 50;
 
         if (!fileInput.files || fileInput.files.length === 0) {
             alert('Please select an image first!');
@@ -134,4 +134,45 @@
                     maxDimension = 900;
                 }
 
-                if (width > maxDimension
+                if (width > maxDimension || height > maxDimension) {
+                    if (width > height) {
+                        height = Math.round((height * maxDimension) / width);
+                        width = maxDimension;
+                    } else {
+                        width = Math.round((width * maxDimension) / height);
+                        height = maxDimension;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, width, height);
+                ctx.drawImage(img, 0, 0, width, height);
+
+                var quality = 0.95;
+                var dataUrl = canvas.toDataURL('image/jpeg', quality);
+                
+                while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.2) {
+                    quality -= 0.02;
+                    dataUrl = canvas.toDataURL('image/jpeg', quality);
+                }
+
+                var finalSizeKb = Math.round((dataUrl.length * (3/4)) / 1024);
+
+                document.getElementById('preview').src = dataUrl;
+                document.getElementById('fileInfo').innerHTML = 'Final Size: <b>' + finalSizeKb + ' KB</b> (Target: &lt; ' + maxKb + ' KB)';
+                document.getElementById('downloadBtn').href = dataUrl;
+                document.getElementById('resultBox').style.display = 'block';
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+</script>
+
+</body>
+</html>
