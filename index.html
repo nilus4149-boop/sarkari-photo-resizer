@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="h4_hzNXD_hBDNIElbMxy7M5RKYJwnu6IRcrsG7h37yM" />
     <title>Govt Form Photo & Signature KB Resizer</title>
     <meta name="description" content="Free online tool to compress and resize photo and signature in KB for SSC, UPSC, Banking and all Indian Government competitive exams with high quality.">
     <style>
@@ -100,10 +101,9 @@
                 var width = img.width;
                 var height = img.height;
 
-                // Smart scaling: taaki quality kharab na ho aur size bhi limit me aaye
                 var maxDimension = 900;
                 if (maxKb <= 25) {
-                    maxDimension = 500; // Signature ke liye chhota size lekin sharp
+                    maxDimension = 500;
                 }
 
                 if (width > maxDimension || height > maxDimension) {
@@ -125,12 +125,11 @@
                 ctx.fillRect(0, 0, width, height);
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // Start with high quality and slowly step down only if needed
                 var quality = 0.95;
                 var dataUrl = canvas.toDataURL('image/jpeg', quality);
                 
                 while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.3) {
-                    quality -= 0.03; // Smooth step down taaki ekdum se quality na phate
+                    quality -= 0.03;
                     dataUrl = canvas.toDataURL('image/jpeg', quality);
                 }
 
