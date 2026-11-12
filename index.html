@@ -131,7 +131,7 @@
 
     <div class="container">
         <h1>Govt Form Photo & KB Resizer Tool</h1>
-        <p class="subtitle">Instantly compress and resize passport photos, signatures, and documents to exact KB sizes for Sarkari Exams.</p>
+        <p class="subtitle">Instantly compress and resize passport photos, signatures, and documents to exact KB sizes for Sarkari Exams without losing quality.</p>
 
         <div class="upload-box">
             <div class="input-group">
@@ -141,7 +141,7 @@
 
             <div class="input-group">
                 <label for="targetSize">Target Maximum Size in KB (e.g., 20, 50, 100):</label>
-                <input type="number" id="targetSize" placeholder="Enter KB size" value="50">
+                <input type="number" id="targetSize" placeholder="Enter KB size" value="20">
             </div>
 
             <button id="resizeBtn">Compress & Download Image</button>
@@ -276,11 +276,15 @@
                     const canvas = document.getElementById('canvas');
                     const ctx = canvas.getContext('2d');
 
+                    // High quality rendering enable karega taaki pixels blur ya block na ho
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+
                     let width = img.width;
                     let height = img.height;
 
-                    // Standard resolution cap to protect image sharpness
-                    let maxDimension = 900;
+                    // Target KB ke hisaab se perfect sharp dimensions calculate karna
+                    let maxDimension = targetSizeKB <= 25 ? 500 : (targetSizeKB <= 50 ? 700 : 1000);
                     if (width > maxDimension || height > maxDimension) {
                         if (width > height) {
                             height = Math.round((height * maxDimension) / width);
@@ -295,23 +299,29 @@
                     canvas.height = height;
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    let quality = 0.85;
+                    // Quality ko high (88%) par fix rakhenge taaki clarity bilkul premium rahe
+                    let quality = 0.88;
                     let dataUrl = canvas.toDataURL('image/jpeg', quality);
 
+                    // Smart adjustment loop
                     let attempts = 0;
-                    while (dataUrl.length > targetSizeKB * 1024 * 1.37 && quality > 0.25 && attempts < 8) {
-                        quality -= 0.1;
+                    while (dataUrl.length > targetSizeKB * 1024 * 1.37 && width > 180 && attempts < 15) {
+                        width = Math.round(width * 0.90);
+                        height = Math.round(height * 0.90);
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
                         dataUrl = canvas.toDataURL('image/jpeg', quality);
                         attempts++;
                     }
 
                     const link = document.createElement('a');
                     link.href = dataUrl;
-                    link.download = 'resized-sarkari-photo.jpg';
+                    link.download = 'perfect-sarkari-photo.jpg';
                     link.click();
 
                     statusMsg.style.color = 'green';
-                    statusMsg.innerText = 'Success! Image compressed and downloaded.';
+                    statusMsg.innerText = 'Success! Image compressed cleanly with high quality.';
                 };
             };
         });
