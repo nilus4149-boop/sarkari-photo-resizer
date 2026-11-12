@@ -3,176 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="h4_hzNXD_hBDNIElbMxy7M5RKYJwnu6IRcrsG7h37yM" />
-    <title>Govt Form Photo & Signature KB Resizer - SSC, UPSC, Banking, Railway</title>
-    <meta name="description" content="Free online tool to compress and resize photo, signature, and documents in KB for competitive exams and government forms.">
+    <title>Govt Form Photo & KB Resizer - Compress Image Size Online</title>
+    <meta name="description" content="Free online tool to resize, compress, and reduce image size in KB for sarkari exams, government job forms, passport photos, and signatures.">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        body { background-color: #f4f6f9; color: #333; line-height: 1.6; padding: 20px; }
-        .container { max-width: 680px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { font-size: 22px; color: #1a73e8; text-align: center; margin-bottom: 8px; }
-        p.subtitle { text-align: center; font-size: 13px; color: #666; margin-bottom: 25px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: bold; margin-bottom: 6px; font-size: 14px; }
-        input[type="file"], select, input[type="number"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; background: #fff; }
-        .row { display: flex; gap: 15px; }
-        .row .form-group { flex: 1; }
-        button { background-color: #1a73e8; color: white; border: none; padding: 12px; width: 100%; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer; transition: background 0.3s; margin-top: 5px; }
-        button:hover { background-color: #1557b0; }
-        .result-box { margin-top: 25px; padding: 15px; background: #e8f0fe; border-radius: 5px; display: none; text-align: center; }
-        .result-box h3 { margin-bottom: 10px; color: #1a73e8; }
-        canvas { display: none; }
-        .preview-img { max-width: 100%; max-height: 300px; margin: 10px auto; display: block; border: 1px solid #ccc; background: #fff; padding: 2px; }
-        .download-btn { display: inline-block; background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; margin-top: 10px; }
-        .download-btn:hover { background-color: #218838; }
-        
-        .seo-section { margin-top: 35px; border-top: 2px solid #e8f0fe; padding-top: 20px; font-size: 13px; color: #444; }
-        .seo-section h2 { font-size: 16px; color: #1a73e8; margin-top: 15px; margin-bottom: 8px; }
-        .seo-section ul { margin-left: 20px; margin-bottom: 15px; }
-        .seo-section li { margin-bottom: 5px; }
-        .faq-item { margin-bottom: 12px; }
-        .faq-item strong { color: #222; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 22px;
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .upload-box {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            background: #fafafa;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        input[type="number"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #1557b0;
+        }
+        .result-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .seo-content {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .seo-content h2 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Govt Form Photo & Signature KB Resizer</h1>
-    <p class="subtitle">High Quality Compression for SSC, Banking, UPSC & State Exams</p>
+    <div class="container">
+        <h1>Govt Form Photo & KB Resizer</h1>
+        <p class="subtitle">Easily compress your photo and signature to exact KB sizes for government exams.</p>
 
-    <div class="form-group">
-        <label for="imageInput">1. Select your Photo, Signature or Document:</label>
-        <input type="file" id="imageInput" accept="image/*">
-    </div>
+        <div class="upload-box">
+            <div class="input-group">
+                <label for="imageInput">Select Image (JPG/PNG):</label>
+                <input type="file" id="imageInput" accept="image/*">
+            </div>
 
-    <div class="row">
-        <div class="form-group">
-            <label for="presetSelect">2. Standard Requirements:</label>
-            <select id="presetSelect" onchange="applyPreset()">
-                <option value="custom">Custom Size</option>
-                <option value="photo_preset">Photo</option>
-                <option value="signature_preset">Signature</option>
-                <option value="document_preset">Document / Page</option>
-            </select>
+            <div class="input-group">
+                <label for="targetSize">Target Size in KB (e.g., 20 or 50):</label>
+                <input type="number" id="targetSize" placeholder="Enter KB size" value="50">
+            </div>
+
+            <button id="resizeBtn">Compress & Download Image</button>
         </div>
-        <div class="form-group">
-            <label for="maxKb">3. Target Max Size (KB):</label>
-            <input type="number" id="maxKb" value="50">
+
+        <div class="result-section">
+            <canvas id="canvas" style="display:none;"></canvas>
+            <p id="statusMsg"></p>
         </div>
-    </div>
 
-    <button type="button" onclick="startResize()">Compress & Maintain Quality</button>
-
-    <div class="result-box" id="resultBox">
-        <h3>Compression Successful!</h3>
-        <img id="preview" class="preview-img" alt="Compressed Preview">
-        <p id="fileInfo" style="font-size: 13px; margin-bottom: 10px;"></p>
-        <a id="downloadBtn" class="download-btn" download="resized-image.jpg">Download Clean Image</a>
-    </div>
-
-    <canvas id="canvas"></canvas>
-
-    <div class="seo-section">
-        <h2>Government Exam Photo & Signature Guidelines</h2>
-        <p>This tool is specially designed for Indian competitive exam aspirants to compress and resize photos, signatures, and documents down to exact KB limits without losing clarity or sharpness.</p>
-        
-        <h2>Supported Examinations</h2>
-        <ul>
-            <li><strong>SSC Exams:</strong> CGL, CHSL, GD Constable, MTS, CPO, Steno</li>
-            <li><strong>Banking Exams:</strong> IBPS PO, Clerk, SBI PO, RBI Assistant</li>
-            <li><strong>Railway Exams:</strong> RRB NTPC, Group D, ALP, Technician</li>
-            <li><strong>UPSC & State PSC:</strong> IAS, IPS, State PCS, Police Recruitment</li>
-        </ul>
-
-        <h2>Frequently Asked Questions (FAQs)</h2>
-        <div class="faq-item">
-            <strong>Q1. Will my photo or document blur after compression?</strong>
-            <p>No, this tool uses smart client-side canvas dimension scaling and adaptive compression algorithms to ensure your image remains as sharp and clear as possible.</p>
-        </div>
-        <div class="faq-item">
-            <strong>Q2. Is my uploaded image data safe?</strong>
-            <p>Yes, 100% safe. Your images are never uploaded to any external server; all processing happens securely right inside your web browser.</p>
+        <!-- Google ke liye SEO Content Section (Ye index karne mein help karega) -->
+        <div class="seo-content">
+            <h2>About Govt Form Photo & KB Resizer Tool</h2>
+            <p>When applying for online government jobs, sarkari exams, or admissions, portals often require passport-sized photos and signatures to be under a specific file size limit (such as 20KB, 50KB, or 100KB). This free online tool helps you instantly compress your images without losing essential clarity.</p>
+            
+            <h2>How to Use This Tool:</h2>
+            <ol>
+                <li>Click on 'Choose File' and select your photo or signature from your device.</li>
+                <li>Enter your desired maximum file size in KB (Kilobytes).</li>
+                <li>Click on the <strong>Compress & Download Image</strong> button to save your resized file.</li>
+            </ol>
         </div>
     </div>
-</div>
 
-<script>
-    function applyPreset() {
-        var val = document.getElementById('presetSelect').value;
-        var kbInput = document.getElementById('maxKb');
-        if(val === 'photo_preset') kbInput.value = 50;
-        if(val === 'signature_preset') kbInput.value = 20;
-        if(val === 'document_preset') kbInput.value = 150;
-    }
+    <script>
+        document.getElementById('resizeBtn').addEventListener('click', function () {
+            const fileInput = document.getElementById('imageInput');
+            const targetSizeKB = parseInt(document.getElementById('targetSize').value);
+            const statusMsg = document.getElementById('statusMsg');
 
-    function startResize() {
-        var fileInput = document.getElementById('imageInput');
-        var maxKbInput = document.getElementById('maxKb');
-        var maxKb = parseInt(maxKbInput.value) || 50;
+            if (fileInput.files.length === 0) {
+                alert('Please select an image first!');
+                return;
+            }
 
-        if (!fileInput.files || fileInput.files.length === 0) {
-            alert('Please select an image first!');
-            return;
-        }
+            if (!targetSizeKB || targetSizeKB <= 0) {
+                alert('Please enter a valid target size in KB.');
+                return;
+            }
 
-        var file = fileInput.files[0];
-        var reader = new FileReader();
+            const file = fileInput.files[0];
+            const reader = new FileReader();
 
-        reader.onload = function(e) {
-            var img = new Image();
-            img.onload = function() {
-                var canvas = document.getElementById('canvas');
-                var ctx = canvas.getContext('2d');
+            reader.readAsDataURL(file);
+            reader.onload = function (event) {
+                const img = new Image();
+                img.src = event.target.result;
 
-                var width = img.width;
-                var height = img.height;
+                img.onload = function () {
+                    const canvas = document.getElementById('canvas');
+                    const ctx = canvas.getContext('2d');
 
-                var maxDimension = 1100;
-                if (maxKb <= 25) {
-                    maxDimension = 650;
-                } else if (maxKb <= 50) {
-                    maxDimension = 900;
-                }
+                    let width = img.width;
+                    let height = img.height;
 
-                if (width > maxDimension || height > maxDimension) {
-                    if (width > height) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    } else {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    let quality = 0.9;
+                    let dataUrl = canvas.toDataURL('image/jpeg', quality);
+
+                    // Loop to reduce quality until target size is reached
+                    let attempts = 0;
+                    while (dataUrl.length > targetSizeKB * 1024 * 1.37 && quality > 0.05 && attempts < 20) {
+                        quality -= 0.1;
+                        dataUrl = canvas.toDataURL('image/jpeg', quality);
+                        attempts++;
                     }
-                }
 
-                canvas.width = width;
-                canvas.height = height;
+                    // Create download link
+                    const link = document.createElement('a');
+                    link.href = dataUrl;
+                    link.download = 'resized-image.jpg';
+                    link.click();
 
-                ctx.imageSmoothingEnabled = true;
-                ctx.imageSmoothingQuality = 'high';
-                ctx.fillStyle = '#FFFFFF';
-                ctx.fillRect(0, 0, width, height);
-                ctx.drawImage(img, 0, 0, width, height);
-
-                var quality = 0.95;
-                var dataUrl = canvas.toDataURL('image/jpeg', quality);
-                
-                while ((dataUrl.length * (3/4)) > maxKb * 1024 && quality > 0.2) {
-                    quality -= 0.02;
-                    dataUrl = canvas.toDataURL('image/jpeg', quality);
-                }
-
-                var finalSizeKb = Math.round((dataUrl.length * (3/4)) / 1024);
-
-                document.getElementById('preview').src = dataUrl;
-                document.getElementById('fileInfo').innerHTML = 'Final Size: <b>' + finalSizeKb + ' KB</b> (Target: &lt; ' + maxKb + ' KB)';
-                document.getElementById('downloadBtn').href = dataUrl;
-                document.getElementById('resultBox').style.display = 'block';
+                    statusMsg.style.color = 'green';
+                    statusMsg.innerText = 'Image compressed and downloaded successfully!';
+                };
             };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-</script>
+        });
+    </script>
 
 </body>
 </html>
